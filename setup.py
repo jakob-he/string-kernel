@@ -18,6 +18,8 @@ setup(name='string-kernel',
       license='MIT',
       packages=find_packages(),
       install_requires=[
+      'numpy',
+      'scipy'
       ],
       include_package_data=True,
       zip_safe=False)

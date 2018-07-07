@@ -6,7 +6,7 @@ Class that includes the construction of a trie based on a set of strings
 and a prefix search function.
 '''
 # own libraries
-from motif import Motif
+from lib.motif import Motif
 
 import numpy as np
 
@@ -41,35 +41,49 @@ class Trie:
     def __repr__(self):
         return self._print_node(self._root,"")
 
-    def __contains__(self, sequence: str) -> np.array:
+    def _check_for_motifs(self, sequence: str) -> np.array:
         """
         Returns a numpy array containing the number of motifs in the given sequence.
         """
+        motifdict = {motif:0 for motif in self._motifs}
+        for i,c in enumerate(sequence):
+            motifdict = self._dfs(sequence[i:],motifdict)
 
-    def _dfs(self, motif: str) -> [str]:
+        return np.fromiter(motifdict.values(), dtype=float)
+
+
+    def _dfs(self, sequence: str, motifdict: dict) -> [str]:
         """
         Depth-first-search Implementation
         """
         node = self._root
         char_index = 0
         priolist = []
-        matching_motifs = []
 
-        if not root.children:
+        if not node._children:
             return False
 
+        matching_childs = [(child, char_index)
+                           for child in node._children if child._char in sequence[char_index] or child._char == "."]
+        priolist.extend(matching_childs)
+
         while priolist:
+            # get new element and index from the priorityqueue
+            node, char_index = priolist.pop()
+            char_index += 1
             # check if current node is the end of a motif.
             if node._motif_finished:
-                matching_motifs.append(node._motif)
+                motifdict[node._motif] += 1
+            # check if end of the string is reached
+            elif char_index == len(sequence):
+                return motifdict
+
             # fill priorityqueue with matching childs
             matching_childs = [(child, char_index)
-                               for child in node._children if child._char in motif[char_index] or child.char == "."]
+                               for child in node._children if sequence[char_index] in child._char or child._char == "."]
             priolist.extend(matching_childs)
-            node = priolist.pop()
-            char_index += 1
 
-        return matching_motifs
+        return motifdict
 
     def _add(self, motif: Motif):
         """
@@ -95,11 +109,11 @@ class Trie:
         node._motif_finished = True
         node._motif = motif._orginal_motif
 
-
+#Test
 def main():
     trie = Trie(["A[CG]T", "C.G", "C..G.T", "G[A][AT]",
                  "GT.A[CA].[CT]G"])
-    print(trie)
+    print(trie._check_for_motifs("AGTCTGCTTGCT"))
 
 
 if __name__ == '__main__':
