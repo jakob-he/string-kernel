@@ -30,6 +30,7 @@ def preprocess(sequences, ignoreLower=True):
        else lower case is ignored(default)
     """
     upper_seq = []
+    len_record = []
     for seq in sequences:
         if ignoreLower:
             seq = [x for x in seq if 'A' <= x <= 'Z']
@@ -37,8 +38,15 @@ def preprocess(sequences, ignoreLower=True):
             seq = seq.upper()
 
         upper_seq.append(integerized(seq))
-    
-    return upper_seq
+        len_record.append(len(seq))
+
+    length_used = min(len_record)
+    post_seq = []
+    for seq in upper_seq:
+        seq = seq[:length_used]
+        post_seq.append(seq)
+
+    return post_seq
 
 
 def normalize_kernel(kernel):
