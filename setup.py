@@ -14,12 +14,13 @@ setup(name='string-kernel',
       keywords='string kernel SVM machine learning',
       url='https://github.com/jakobhertzberg/string-kernel',
       author='Meng Zhang, Mitra Darvish, Jakob Hertzberg',
-      author_email='jakob.hertzberg@gmail.com',
+      author_email='jakob.hertzberg@gmail.com, mdarvish@posteo.de',
       license='MIT',
       packages=find_packages(),
       install_requires=[
       'numpy',
-      'scipy'
+      'scipy',
+        'Biopython'
       ],
       include_package_data=True,
       zip_safe=False)
