@@ -71,28 +71,24 @@ class MismatchKernel(MismatchTrie):
     Python implementation of Mismatch String Kernels.
     Parameters
     ----------
-    l: int, optional (default None)
-       size of alphabet. Example of values with a natural interpretation:
+    l: int, optional (default None), size of alphabet.
+       Examples of values with a natural interpretation:
        2: for binary data
        256: for data encoded as strings of bytes
        4: for DNA/RNA sequence (bioinformatics)
        20: for protein data (bioinformatics)
-    k: int, optional (default None)
-       the k in 'k-mer'.
+    k: int, optional (default None), the k in 'k-mer'
     m: int, optional (default None)
-       maximum number of mismatches for 2 k-mers to be considered 'similar'.
-       Normally small values of m should work well.
-       Plus, the complexity of the algorithm is exponential in m.
+       maximum number of mismatches for 2 k-mers to be considered 'similar'
+       Normally small values of m should work well
+       Plus, the complexity of the algorithm is exponential in m
     **kwargs: dict, optional (default empty)
               optional parameters to pass to `tree.MismatchTrie` instantiation
     
     Attributes
     ----------
-    `kernel`: 2D array of shape (n_sampled, n_samples)
-        estimated kernel
-    `n_survived_kmers`:
-        number of leafs/k-mers that survived trie traversal
- 
+    `kernel`: 2D array of shape (n_sampled, n_samples), estimated kernel
+    `n_survived_kmers`: number of leafs/k-mers that survived trie traversal
     """
 
     def __init__(self, l=None, k=None, m=None, **kwargs):
@@ -150,7 +146,8 @@ class MismatchKernel(MismatchTrie):
 
 # Test
 if __name__ == '__main__':
-    sequences = ['ACGTTGA','TGACCGT','ACGTTTG','ATGCTGT','TCACCGT']
+    sequences = ['aatgcACGTTGAgatcg','acgtgACGTTTGacggt','agtccATGCTGTaagtc',
+    'gttccTCACCGTcgcgt','gtacgTCTCGCTgtcgt']
     int_seq = preprocess(sequences)
     mismatch_kernel = MismatchKernel(l=4, k=3, m=1).get_kernel(int_seq)
     simi_mat = mismatch_kernel.kernel
