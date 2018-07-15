@@ -144,34 +144,3 @@ class GappyPair:
 
     def get_params(self,deep=True):
         return {"C" : self.C, "k" : self.k,"gap":self.g,"sequence type":sequenceTypes[self.t],"sparse":self.sparse,"reverse_complement":self.reverse,"include_flanking" : self.include_flanking}
-
-def read(fname):
-    sequences=[]
-    with open(fname,'r') as f:
-        for line in f:
-            if line[0]!='>':
-                sequences.append(line.split()[0])
-    return sequences
-
-
-def main():
-    #print(get_numbers_for_sequence(Seq('ACCA')))
-    #print(get_numbers_for_sequence(Seq('TGGT'),reverse=True))
-    #print(get_numbers_for_sequence(Seq('ACCA'), t=2))
-    #print(_extract_gappy_sequence(Seq('AATTACT'),k=2,g=1,reverse=True))
-    #print(extract_spectrum([Seq('AATTACT'),Seq('CCGTAGG'),Seq('ATTAATT')],k=2,g=1,reverse=True,sparse=False))
-    #sequences = ["ACGTCGATGC", "GTCGATAGCC"]
-    #print(extract_spectrum(sequences,k=3,g=1))
-    #print(_extract_gappy_sequence(Seq('AALLLCCW'),k=2,g=1,t=2,reverse=True))
-    pos=[Seq(x) for x in read('./testdata/positive_IGF2BP123.fasta')]
-    neg=[Seq(x) for x in read('./testdata/negative_IGF2BP123.fasta')]
-    import time
-    start=time.time()
-    a=extract_spectrum(pos,k=3,g=2)
-    #extract_spectrum(neg,k=3,g=2)
-    print(a)
-    print ("Calculated {}-gappypair in {} seconds".format(3, time.time() - start))
-
-
-if __name__ == '__main__':
-    main()
