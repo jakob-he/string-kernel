@@ -17,10 +17,8 @@ class MismatchTrie(object):
 
     def __init__(self, label=None, parent=None):
         """
-        label: int, optional (default None)
-            node label
-        parent: `Trie` instance, optional (default None)
-            node's parent
+        label: int, optional (default None), node label
+        parent: `Trie` instance, optional (default None), node's parent
         """
 
         self.label = label  # label on edge connecting this node to its parent
@@ -122,8 +120,8 @@ class MismatchTrie(object):
         Parameters
         ----------
         training_data: 2D array of shape (n_samples, n_features)
-            training data for the kernel
-        k: int, used in k-mers for computing the kernel
+                       training data for the kernel
+        k: int, used in k-mers to compute the kernel
         """
 
         # sanity checks
@@ -149,11 +147,11 @@ class MismatchTrie(object):
         ----------
         training_data: 2D array of shape (n_samples, n_features)
                        training data for the kernel
-        k: int, used in k-mers for computing the kernel
+        k: int, used in k-mers to compute the kernel
         m: int
-           maximum number of mismatches for 2 k-mers to be considered 'similar'.
-           Normally small values of m should work well.
-           Plus, the complexity the algorithm is exponential in m.
+           maximum number of mismatches for 2 k-mers to be considered 'similar'
+           Normally small values of m should work well
+           Plus, the complexity the algorithm is exponential in m
         
         Return
         -------
@@ -215,15 +213,14 @@ class MismatchTrie(object):
         Parameters
         ----------
         training_data: 2D array of shape (n_samples, n_features)
-            training data for the kernel
-        l: int
-            size of alphabet. Example of values with a natural interpretation:
-            2: for binary data
-            256: for data encoded as strings of bytes
-            4: for DNA/RNA sequence data (bioinformatics)
-            20: for protein data (bioinformatics)
-        k: int:
-            we will use k-mers for computing the kernel
+                       training data for the kernel
+        l: int, size of alphabet.
+           Examples of values with a natural interpretation:
+           2: for binary data
+           256: for data encoded as strings of bytes
+           4: for DNA/RNA sequence data (bioinformatics)
+           20: for protein data (bioinformatics)
+        k: int, we will use k-mers to compute the kernel
         m: int
            maximum number of mismatches for 2 k-mers to be considered 'similar'.
            Normally small values of m should work well.
@@ -233,12 +230,9 @@ class MismatchTrie(object):
 
         Returns
         -------
-        kernel: 2D array of shape (n_samples, n_samples)
-            estimated kernel
-        n_survived_kmers: int
-            number of leaf nodes that survived the traversal
-        go_ahead: boolean
-            a flag indicating whether the node got aborted (False) or not
+        kernel: estimated kernel, 2D array of shape (n_samples, n_samples)
+        n_survived_kmers: int, number of leaf nodes that survived the traversal
+        go_ahead: boolean, a flag indicating whether the node got aborted (False) or not
         """
 
         # initialize kernel if None
