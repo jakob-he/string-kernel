@@ -121,7 +121,7 @@ def prepare_data(sequences, t, include_flanking = False):
     """
     if include_flanking:
         return np.array([np.array([alphabets[t].index(p.upper()) for p in x]) for x in sequences])
-    return np.array([np.array([alphabets[t].index(p) for p in x if 'A' <= p <= 'Z']) for x in sequences])
+    return np.array([np.array([alphabets[t].index(p) for p in x if ('A' <= p <= 'Z') & (p in alphabets[t])]) for x in sequences])
 
 def gappypair_kernel(sequences,k,t,g=1,include_flanking=False):
     """Compute gappypair kernel for given sequences, k-mer length k and
@@ -146,15 +146,3 @@ def gappypair_kernel(sequences,k,t,g=1,include_flanking=False):
     if k%2 == 0:
         gap_pos.append(int(k/2)+1)
     return gapkernel(sequences,k,t,g,gap_pos)
-
-if __name__ == "__main__":
-    #main()
-    seqs= ['aaaaaAACCGTACT', 'ACGTGTGT', 'CGATATAC']
-    seqs2=[Seq(x) for x in seqs]
-    #sequences = np.array([['ACGT'.index(p) for p in x] for x in seqs2])
-    #sequences=['ACCGTACT']
-    #sequences = np.array([[0,1,1,2,3,0,1,3], [0,1,2,3,2,3,2,3], [1,2,0,3,0,3,0,1]])
-    #print(prepare_data(seqs,0,include_flanking=True))
-    sequences=prepare_data(seqs,0,include_flanking=False)
-    #print(gapkernel(sequences,2,0,g=1, gap_pos=[1]))
-    print(gappypair_kernel(seqs,2,0,g=1,include_flanking=True))
