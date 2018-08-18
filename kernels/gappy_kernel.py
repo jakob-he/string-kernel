@@ -26,7 +26,6 @@ def get_numbers_for_sequence(sequence,t=0,reverse=False):
 
 def _extract_gappy_sequence(sequence, k, g,t=0,reverse=False):
     """Compute k-spectrum for a given sequence, k-mer length k and gap length g.
-
     This method computes the spectrum for a given sequence and k-mer-length k.
     The idea is to first create a vector of the given size (4**k) and then
     transform each k-mer to a sequence of length k of numbers 0-3
@@ -42,19 +41,18 @@ def _extract_gappy_sequence(sequence, k, g,t=0,reverse=False):
     multiplier = np.power(alphabet, range(kk))[::-1]
     if reverse:
         powersize=int(np.power(alphabet, (kk))/2)
-    spectrum = np.zeros((g+1)*(powersize))
+    spectrum = np.zeros((powersize))
     for pos in range(n - kk + 1):
             pos_in_spectrum = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+(kk)],t,reverse=reverse))
             spectrum[pos_in_spectrum] += 1
-            if (pos+g+kk+1)<n:
-                for gap in range(1,g+1):
+            for gap in range(1,g+1):
+                if (pos+gap+kk)<=n:
                     pos_gap = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+k] + sequence[pos+k+gap:pos+gap+kk],t,reverse=reverse))
-                    spectrum[(gap*(powersize))+pos_gap] += 1
+                    spectrum[pos_gap] += 1
     return spectrum
 
 def _extract_spectrum_sequence(sequence, k,t=0,reverse=False):
     """Compute k-spectrum for a given sequence, k-mer length k.
-
     This method computes the spectrum for a given sequence and k-mer-length k.
     The idea is to first create a vector of the given size (4**k) and then
     transform each k-mer to a sequence of length k of numbers 0-3
@@ -74,13 +72,11 @@ def _extract_spectrum_sequence(sequence, k,t=0,reverse=False):
 
 def extract_spectrum(sequences, k, m=0,g=0,t=0,sparse=True, reverse=False, include_flanking=False):
     """Compute k-spectra for a set of sequences using k-mer length k.
-
     Computes the k-spectra for a set of sequences. This is done such that the
     resulting vectors can be fed into a linear SVM or other classification
     algorithm. The k-spectrum of a sequence is a sparse vector containing the
     number of times that a k-mer occurs in the given sequence. It has
     as many dimensions as there are possible k-mers.
-
     Parameters:
     ----------
     sequences:              A list of Biopython sequences
@@ -88,7 +84,6 @@ def extract_spectrum(sequences, k, m=0,g=0,t=0,sparse=True, reverse=False, inclu
     g:                      Integer. Gapps allowed. 0 by default
     include_flanking:       Include flanking regions? (the lower-case letters
                             in the sequences given)
-
     Returns:
     -------
     A numpy array of shape (N, 4**k), containing the k-spectrum for each
