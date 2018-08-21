@@ -2,9 +2,7 @@
 '''
 Motif Class
 ---
-Implementation of the motif structure described in
-[Asa Ben-Hur and Douglas L. Brutlag. Remote homology detection: a motif based approach. Bioinformatics,
-19:26–33, 2003.]
+Class that converts the input list of strs to motif objects.
 '''
 
 class Motif:

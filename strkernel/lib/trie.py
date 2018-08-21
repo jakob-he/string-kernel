@@ -6,7 +6,7 @@ Class that includes the construction of a trie based on a set of strings
 and a prefix search function.
 '''
 # own libraries
-from kernels.lib.motif import Motif
+from strkernel.lib.motif import Motif
 
 import numpy as np
 
@@ -97,13 +97,3 @@ class Trie:
         # Mark the end of the motif and add the motif as a string.
         node._motif_finished = True
         node._motif = motif._orginal_motif
-
-#Test
-def main():
-    trie = Trie(["A[CG]T", "C.G", "C..G.T", "G[A][AT]",
-                 "GT.A[CA].[CT]G"])
-    print(trie._check_for_motifs("AGTCTGCTTGCT"))
-
-
-if __name__ == '__main__':
-    main()

@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 '''
 Implementation of the motif kernel.
+Reference:
 [Asa Ben-Hur and Douglas L. Brutlag. Remote homology detection: a motif based approach. Bioinformatics,
 19:26–33, 2003.]
 '''
 # own libraries
-from kernels.lib.trie import Trie
+from strkernel.lib.trie import Trie
 
 # 3rd party libraries
 import numpy as np
@@ -51,18 +52,3 @@ def motifKernel(motifs: [str], sequences: [str], return_kernel_matrix = False) -
         return kernel_matrix
     else:
         return csr_matrix(search_results)
-
-
-
-# Test
-def main():
-    motifs = ["A[CG]T", "C.G", "C..G.T", "G[A][AT]"
-              "GT.A[CA].[CT]G"]
-    sequences = ["ACGTCGATGC", "GTCGATAGC", "GCTAGCacgtaCGC",
-                 "GTAGCTgtgcGTGcgt", "CGATAGCTAGTTAGC"]
-
-    print(motifKernel(motifs, sequences))
-
-
-if __name__ == '__main__':
-    main()

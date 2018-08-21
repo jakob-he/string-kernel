@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 
-setup(name='string-kernel',
+setup(name='strkernel',
       version='0.1',
       description='Collection of string kernels',
       long_description='This packages includes a variety of string kernel methods. Each method transform the list of input strings into a format that can be used by machine learning algorithm (e.g. SVM).',
@@ -16,6 +16,8 @@ setup(name='string-kernel',
       author='Meng Zhang, Mitra Darvish, Jakob Hertzberg',
       author_email='jakob.hertzberg@gmail.com, mdarvish@posteo.de',
       license='MIT',
+      test_suite='nose.collector',
+      tests_require=['nose'],
       packages=find_packages(),
       install_requires=[
       'numpy',
