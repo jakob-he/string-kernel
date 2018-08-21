@@ -31,14 +31,17 @@ def motifKernel(motifs: [str], sequences: [str], return_kernel_matrix = False) -
     values which allow for the use of machine learning algorithms.
 
 
-    Args:
+    Parameters:
+    ----------
         motifs: A list of strings where each string is build out three possible components:
             1. Characters of a common alphabet (e.g. {A,G,C,T}) -> this alphabet should be the same for all _motifs
             2. The wildcard character "."
             3. Subsequences that contain 2 ore more characters of the alphabet (e.g. [AG] or [CT]). "^" indicates that every character
                but those in the subsequence could be part of the motif.
         sequences: A list of strings from the same aphabet as the motifs.
+
     Returns:
+    ----------
         The function returns a sparse matrix object which can be used to compute similarities between the sequences.
     """
     motif_trie = processMotifs(motifs)
