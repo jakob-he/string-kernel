@@ -32,15 +32,15 @@ class TrieNode:
     def __repr__(self):
         return self._char
 
-def get_sparse(g,k,t,sequences,gap_pos):
+def get_sparse(g,k,t,sequences,gap_pos,gapDifferent):
     s=[[],[],[]]
     root=TrieNode('*')
     # Initialization of all possible kmers
     root._q = np.array(list(itertools.chain.from_iterable([[(i,j,0) for j in range(sequences[i].size-k+1)] for i in range(sequences.shape[0])])))
-    dfs(root,s,sequences,t,k,g,0,gap_pos)
+    dfs(root,s,sequences,t,k,g,0,gap_pos,gapDifferent)
     return coo_matrix((np.int_(s[0]),(np.int_(s[1]),np.int_(s[2][1:]))))
 
-def dfs(node,sparsem,sequences,t,k,g,i,gap_pos):
+def dfs(node,sparsem,sequences,t,k,g,i,gap_pos, gapDifferent):
     """
     Depth-first-search Implementation
     """
@@ -65,20 +65,32 @@ def dfs(node,sparsem,sequences,t,k,g,i,gap_pos):
                 new_node = TrieNode(letter)
                 new_node._q=new_q
                 node._children.append(new_node)
-                dfs(new_node,sparsem,sequences,t,k,g,i+1,gap_pos)
+                dfs(new_node,sparsem,sequences,t,k,g,i+1,gap_pos,gapDifferent)
     # End reached, prepare data for conversion in sparse matrix
     elif i==k:
         # sparsem =(data,i,j)
-        if len(sparsem[2]) ==0:
+        if len(sparsem[2]) == 0:
             sparsem[2]=[-1]
-        used = set()
-        seqns=[seq for (seq,_,_) in node._q if seq not in used and (used.add(seq) or True)]
-        adding=np.zeros(len(seqns))
-        for qq in ((node._q)):
-            adding[seqns.index(qq[0])]+=1
-        sparsem[0]=np.append(sparsem[0],adding)
-        sparsem[1]=np.append(sparsem[1],np.array(seqns))
-        sparsem[2]=np.append(sparsem[2],np.array([sparsem[2][-1]+1 for s in seqns ]))
+        if gapDifferent:
+            for gap in range(g+1):
+                used = set()
+                seqns=[seq for (seq,_,a) in node._q if (seq not in used)  and (a==gap+1)]
+                adding=np.zeros(len(seqns))
+                for qq in ((node._q)):
+                    if (qq[0] in seqns) & (qq[2]==gap+1):
+                        adding[seqns.index(qq[0])]+=1
+                sparsem[0]=np.append(sparsem[0],adding)
+                sparsem[1]=np.append(sparsem[1],np.array(seqns))
+                sparsem[2]=np.append(sparsem[2],np.array([sparsem[2][-1]+1 for s in seqns ]))
+        else:
+            used = set()
+            seqns=[seq for (seq,_,_) in node._q if seq not in used and (used.add(seq) or True)]
+            adding=np.zeros(len(seqns))
+            for qq in ((node._q)):
+                adding[seqns.index(qq[0])]+=1
+            sparsem[0]=np.append(sparsem[0],adding)
+            sparsem[1]=np.append(sparsem[1],np.array(seqns))
+            sparsem[2]=np.append(sparsem[2],np.array([sparsem[2][-1]+1 for s in seqns ]))
 
 # Checks if there are matches in the kmer
 def matching(sequences,seqn,kpos,last,k,g,letter):
@@ -88,8 +100,8 @@ def update(sequences,tupleq,k,g,letter):
     new=matching(sequences,tupleq[0],tupleq[1],tupleq[2],k,g,letter)
     return np.array([(tupleq[0],tupleq[1],tupleq[2]+x) for x in new if (tupleq[2]+x <= k+g) & (x>0)])
 
-def gapkernel(sequences,k,t,g=0,gap_pos=[]):
-    """Compute k-spectrum for given sequences, k-mer length k and gap length g,
+def gapkernel(sequences,k,t,g=0,gap_pos=[], gapDifferent = False):
+    """Compute gapped kernel for given sequences, k-mer length k and gap length g,
     the specific type of data and the positions where gaps can occur gap_pos.
     Parameters:
     ----------
@@ -105,7 +117,7 @@ def gapkernel(sequences,k,t,g=0,gap_pos=[]):
     """
     if not gap_pos:
         gap_pos=[i for i in range(k)]
-    return get_sparse(g,k,t,sequences,gap_pos)
+    return get_sparse(g,k,t,sequences,gap_pos,gapDifferent)
 
 def prepare_data(sequences, t, include_flanking = False):
     """If sequences is not a numpy array, this function can converse them to one.
@@ -123,7 +135,7 @@ def prepare_data(sequences, t, include_flanking = False):
         return np.array([np.array([alphabets[t].index(p.upper()) for p in x]) for x in sequences])
     return np.array([np.array([alphabets[t].index(p) for p in x if ('A' <= p <= 'Z') & (p in alphabets[t])]) for x in sequences])
 
-def gappypair_kernel(sequences,k,t,g=1,include_flanking=False):
+def gappypair_kernel(sequences,k,t,g=1,include_flanking=False,gapDifferent = True):
     """Compute gappypair kernel for given sequences, k-mer length k and
     gap length g, the specific type of data. If sequences are not a numpy array,
     prepare data will transform them to one.
@@ -142,7 +154,4 @@ def gappypair_kernel(sequences,k,t,g=1,include_flanking=False):
     """
     if (isinstance(sequences[0], str)) | (isinstance(sequences[0], Seq)):
         sequences=prepare_data(sequences, t, include_flanking)
-    gap_pos=[int(k/2)]
-    if k%2 == 0:
-        gap_pos.append(int(k/2)+1)
-    return gapkernel(sequences,k,t,g,gap_pos)
+    return gapkernel(sequences,2*k,t,g,[k],gapDifferent)
