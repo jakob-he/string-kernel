@@ -20,8 +20,8 @@ setup(name='strkernel',
       tests_require=['nose'],
       packages=find_packages(),
       install_requires=[
-      'numpy',
-      'scipy',
+        'scipy',
+        'numpy',
         'Biopython'
       ],
       include_package_data=True,
