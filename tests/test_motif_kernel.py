@@ -3,8 +3,8 @@ import numpy as np
 from scipy.sparse import csr_matrix
 
 from strkernel.lib.motif import Motif
-from strkernel.lib.trie import Trie
-from strkernel.motif_kernel import motifKernel
+from strkernel.lib.motiftrie import MotifTrie
+from strkernel.motifkernel import motifKernel
 
 
 class Test_Motif_Kernel(TestCase):
@@ -14,7 +14,7 @@ class Test_Motif_Kernel(TestCase):
         self.assertTrue(test_motif._motif == ["A", "CG", "T"])
 
     def test_trie(self):
-        trie = Trie(["A[CG]T", "C.G", "C..G.T", "G[A][AT]", "GT.A[CA].[CT]G"])
+        trie = MotifTrie(["A[CG]T", "C.G", "C..G.T", "G[A][AT]", "GT.A[CA].[CT]G"])
         self.assertTrue(np.array_equal(
             trie._check_for_motifs("AGTCTGCTTGCT"), [1, 1, 1, 0, 0]))
 
@@ -24,7 +24,8 @@ class Test_Motif_Kernel(TestCase):
         sequences = ["ACGTCGATGC", "GTCGATAGC", "GCTAGCacgtaCGC",
                      "GTAGCTgtgcGTGcgt", "CGATAGCTAGTTAGC"]
 
-        matrix_1 = motifKernel(motifs, sequences)
+        motif_kernel = motifKernel(motifs)
+        matrix_1 = motif_kernel.compute_matrix(sequences)
 
         row = np.array([3, 4, 4])
         col = np.array([1, 0, 2])

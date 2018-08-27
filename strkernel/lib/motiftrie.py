@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 '''
-Trie Implementation
----
-Class that includes the construction of a trie based on a set of strings
-and a prefix search function.
+Motif Trie Module
 '''
 # own libraries
 from strkernel.lib.motif import Motif
@@ -11,7 +8,10 @@ from strkernel.lib.motif import Motif
 import numpy as np
 
 class TrieNode:
-    """Implementation of a trie node."""
+    """
+    The TrieNode class consist of an element of a motif and its children in the Motif Trie.
+    This class can be considerd a helper for the MotifTrie class.
+    """
 
     def __init__(self, char: str):
         self._char = char
@@ -23,28 +23,59 @@ class TrieNode:
         return self._char
 
 
-class Trie:
-    """Main Trie class."""
+class MotifTrie:
+    """
+    The main objective of this class is to construct a Trie from a set of Motifs (strings). The Trie
+    can then be used to compute the motif content of a sequence.
+
+    First, Each of the motifs which is passed to the constructer is converted into a Motif object. The
+    Motif objects are then used for the Trie constrcution.
+
+    The Trie construction can be seperated into the following steps:
+
+    1. The Trie is initialized with a root node (TrieNode object)
+    2. Each Motif object is added to the Trie by parsing the Trie and adding the parts of the Motif which are not yet present.
+    3. The final Node object of each Motif is marked.
+
+    If sequences are passed to *check_for_motifs* function a DFS is performend and a numpy array containing the motif content is returned.
+    """
 
     def __init__(self, motifs: [str]):
         self._root = TrieNode('*')
         self._motifs = motifs
         # build the trie object based on the given motifs
         for motif in motifs:
-            self._add(Motif(motif))
+            self.add(Motif(motif))
 
-    def _check_for_motifs(self, sequence: str) -> np.array:
-        """Returns a numpy array containing the number of motifs in the given sequence."""
+    def check_for_motifs(self, sequence: str) -> np.array:
+        """
+        Iterates over the given sequence and returns the sum of the motif content of all subsequences.
+
+        Args:
+            **sequence:** A sequence (read) that only has characters that also appear in the alphabet of the motifs used to construct the MotifTrie.
+
+        Returns:
+            Numpy array containing the motif content of the sequence.
+        """
 
         motifdict = {motif:0 for motif in self._motifs}
         for i,c in enumerate(sequence):
-            motifdict = self._dfs(sequence[i:],motifdict)
+            motifdict = self.dfs(sequence[i:],motifdict)
 
         return np.fromiter(motifdict.values(), dtype=int)
 
 
-    def _dfs(self, sequence: str, motifdict: dict) -> [str]:
-        """Depth-first-search Implementation"""
+    def dfs(self, sequence: str, motifdict: dict) -> [str]:
+        """
+        Performs a depth first search on the input sequence and adds the motif content to the input dictionary.
+
+        Args:
+            **sequence:** A part of the sequence given to check_for_motifs. In the first iteration of check_for_motifs the complete sequence is passed to this function.
+            **motifdict:** A dictionary where each entry refers to one of the motifs used to construct the MotifTrie.
+
+        Returns:
+            The motifdict with the motif content in this specific sequence.
+        """
 
         node = self._root
         char_index = 0
@@ -75,8 +106,13 @@ class Trie:
 
         return motifdict
 
-    def _add(self, motif: Motif):
-        """Adds a motif to the trie."""
+    def add(self, motif: Motif):
+        """
+        Adds a motif to the Trie.
+
+        Args:
+            **motif:** A motif object that originates from a motif (string) passed to the constructer of the MotifTrie.
+        """
 
         node = self._root
         for char in motif:

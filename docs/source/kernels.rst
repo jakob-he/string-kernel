@@ -1,11 +1,9 @@
 Kernels
 =======
 
-Mismatch Kernel
----------------
+.. toctree::
+   :maxdepth: 2
 
-Gappy Kernel
-------------
-
-Motif Kernel
-------------
+   mismatch
+   gappy
+   motif
