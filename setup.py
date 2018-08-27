@@ -22,10 +22,7 @@ setup(name='strkernel',
       install_requires=[
       'numpy',
       'scipy',
-        'Biopython',
-        'sphinx>=1.4',
-        'ipykernel',
-        'nbsphinx'
+        'Biopython'
       ],
       include_package_data=True,
       zip_safe=False)
