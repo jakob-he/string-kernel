@@ -22,7 +22,8 @@ setup(name='strkernel',
       install_requires=[
       'numpy',
       'scipy',
-        'Biopython'
+        'Biopython',
+        'nbsphinx'
       ],
       include_package_data=True,
       zip_safe=False)
