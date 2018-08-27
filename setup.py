@@ -23,6 +23,8 @@ setup(name='strkernel',
       'numpy',
       'scipy',
         'Biopython',
+        'sphinx>=1.4',
+        'ipykernel',
         'nbsphinx'
       ],
       include_package_data=True,
