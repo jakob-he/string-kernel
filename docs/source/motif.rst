@@ -1,7 +1,7 @@
 Motif Kernel
 ============
 
-The Motif Kernel depends on a user defined set of motifs. For each input sequence the number of contained motifs (**motif content**) is computed. These values can then be used as a similarity measurement. Since the features of this kernel are restricted to a user defined set, the performance in later analysis of the kernel output (e.g. classification of cell populations) depends highly on the picked motifs. While this offers a lot of flexibility, the user should carefully decide which motifs are used. The package does not yet include any method to extract significant motifs from a set of sequences. There is, however, a large variety of motif extraction applications available [1]_ [2]_ [3]_. 
+The Motif Kernel depends on a user defined set of motifs. For each input sequence the number of contained motifs (**motif content**) is computed. These values can then be used as a similarity measurement. Since the features of this kernel are restricted to a user defined set, the performance in later analysis of the kernel output (e.g. classification of cell populations) depends highly on the picked motifs. While this offers a lot of flexibility, the user should carefully decide which motifs are used. The package does not yet include any method to extract significant motifs from a set of sequences. There is, however, a large variety of motif extraction applications available [1]_ [2]_ [3]_.  Information on how exactly this kernel implementation works can be found in Modules. 
 
 A single motif is defined by a sequence of the following elements:
 
@@ -14,7 +14,7 @@ A single motif is defined by a sequence of the following elements:
 How to use the Motif Kernel
 ---------------------------
 
-The collection of motifs has to be defined as list of strings::
+The collection of motifs has to be defined as a list of strings::
 
     motif_collection = ["A[^CG]T", "C.G", "C..G.T", "G[A][AT]", "GT.A[CA].[CT]G"]
 
@@ -36,9 +36,9 @@ Afterwards a set of sequences can be passed to the motifKernel object which retu
 References
 ----------
 
-.. [1] : Pissis, S.P., Stamatakis, A. and Pavlidis, P., 2013, September. MoTeX: A word-based HPC tool for MoTif eXtraction. In Proceedings of the International Conference on Bioinformatics, Computational Biology and Biomedical Informatics (p. 13). ACM. 
-.. [2] : Pissis, S.P., 2014. MoTeX-II: structured MoTif eXtraction from large-scale datasets. BMC bioinformatics, 15(1), p.235.
-.. [3] : Zhang, Y. and Zaki, M.J., 2006. EXMOTIF: efficient structured motif extraction. Algorithms for Molecular Biology, 1(1), p.21.
+.. [1] Pissis, S.P., Stamatakis, A. and Pavlidis, P., 2013, September. MoTeX: A word-based HPC tool for MoTif eXtraction. In Proceedings of the International Conference on Bioinformatics, Computational Biology and Biomedical Informatics (p. 13). ACM. 
+.. [2] Pissis, S.P., 2014. MoTeX-II: structured MoTif eXtraction from large-scale datasets. BMC bioinformatics, 15(1), p.235.
+.. [3] Zhang, Y. and Zaki, M.J., 2006. EXMOTIF: efficient structured motif extraction. Algorithms for Molecular Biology, 1(1), p.21.
 
 Modules
 -------

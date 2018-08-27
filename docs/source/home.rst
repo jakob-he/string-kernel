@@ -39,6 +39,13 @@ You can run several tests to ensure that the package is fully working. To use th
     python setup.py test
 
 
+
+What is a String-Kernel?
+-----------------
+To use SVMs with strings it is necessary to have a measurement of similarity for different strings.
+The idea of the most basic string kernel, the spectrum kernel is to count the appearance of k-mers in the string. As a result a string can be represented as a numerical sequence and the similarity of two strings can be calculated by using different kernels, for instance the dot product (linear kernel) of these numerical representations can be calculated.
+Bio sequences such as DNA, RNA and protein sequences are widely used in SVMs, because they have some certain differences to normal text strings (e.g. a smaller alphabet) kernels fitted to their need were invented. Suchs as the gappy-pair, mismatch and motif kernel. 
+
 References
 ----------
 
@@ -47,8 +54,3 @@ References
 .. [3] Asa Ben-Hur and Douglas L. Brutlag. Remote homology detection: a motif based approach. Bioinformatics, 19:26–33, 2003.
 
 
-What is a String-Kernel?
------------------
-To use SVMs with strings it is necessary to have a measurement of similarity for different strings.
-The idea of the most basic string kernel, the spectrum kernel is to count the appearance of k-mers in the string. As a result a string can be represented as a numerical sequence and the similarity of two strings can be calculated by using different kernels, for instance the dot product (linear kernel) of these numerical representations can be calculated.
-Bio sequences such as DNA, RNA and protein sequences are widely used in SVMs, because they have some certain differences to normal text strings (e.g. a smaller alphabet) kernels fitted to their need were invented. Suchs as the gappy-pair, mismatch and motif kernel. 
