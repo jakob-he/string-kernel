@@ -9,8 +9,12 @@ class Test_Mismatch_Kernel(TestCase):
   def test_preprocess(self):
     sequence = ['aACGTt', 'AACGTT']
     int_seq = mismatch_kernel.preprocess(sequence, ignoreLower=False)
-    ignore_lower = mismatch_kernel.preprocess(sequence)
     self.assertEqual(int_seq, [[0,0,1,2,3,3],[0,0,1,2,3,3]])
+
+    # When ignoring lower case, the length of first string is 4,
+    # which is shorter than the 2nd string.
+    # The last 2 digits are ignored in this case.
+    ignore_lower = mismatch_kernel.preprocess(sequence)
     self.assertEqual(ignore_lower, [[0,1,2,3],[0,0,1,2]])
 
   def test_kernel(self):
