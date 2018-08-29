@@ -1,0 +1,23 @@
+from unittest import TestCase
+import unittest
+
+from mismatch_kernel import preprocess
+from mismatch_kernel import MismatchKernel
+import mismatch_kernel
+
+class Test_Mismatch_Kernel(TestCase):
+  def test_preprocess(self):
+    sequence = ['aACGTt', 'AACGTT']
+    int_seq = mismatch_kernel.preprocess(sequence, ignoreLower=False)
+    ignore_lower = mismatch_kernel.preprocess(sequence)
+    self.assertEqual(int_seq, [[0,0,1,2,3,3],[0,0,1,2,3,3]])
+    self.assertEqual(ignore_lower, [[0,1,2,3],[0,0,1,2]])
+
+  def test_kernel(self):
+    sequence = ['ACGT', 'ACGT', 'CATG']
+    matrix = MismatchKernel(l=4, k=3, m=1).get_kernel(preprocess(sequence))
+    self.assertEqual(matrix.kernel[0,1], 1)
+    self.assertLess(matrix.kernel[0,2], 1)
+
+if __name__ == '__main__':
+    unittest.main()
