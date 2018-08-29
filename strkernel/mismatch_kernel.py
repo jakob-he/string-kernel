@@ -1,6 +1,6 @@
 """
  Module: mismatch string kernel
- IMplementattion of mismatch string kernel
+ Implementattion of mismatch string kernel
  Author: Meng Zhang <RainaMeng@outlook.com>
  Reference: 
   Leslie C.S., Eskin E., Cohen A., Weston J., Noble W.S.
@@ -14,21 +14,25 @@ import numpy as np
 
 
 def integerized(sequence):
-    """ Convert the character string into numeric string
     """
+    Convert the character string into numeric string.
+    """
+
     key_dict = sorted(set(sequence))
     int_seq = []
     for char in sequence:
-        to_int = key_dict.index(char)+1
+        to_int = key_dict.index(char)
         int_seq.append(to_int)
 
     return int_seq
 
 def preprocess(sequences, ignoreLower=True):
-    """Data preprocessing for string sequences
-       Convert lower case into upper case if 'ignoreLower' is chosen as 'False'
-       else lower case is ignored(default)
     """
+    Data preprocessing for string sequences.
+    Convert lower case into upper case if 'ignoreLower' is chosen as 'False',
+    else lower case is ignored(default).
+    """
+
     upper_seq = []
     len_record = []
     for seq in sequences:
@@ -36,17 +40,16 @@ def preprocess(sequences, ignoreLower=True):
             seq = [x for x in seq if 'A' <= x <= 'Z']
         else:
             seq = seq.upper()
-
         upper_seq.append(integerized(seq))
         len_record.append(len(seq))
-
+    
     length_used = min(len_record)
     post_seq = []
     for seq in upper_seq:
         seq = seq[:length_used]
         post_seq.append(seq)
-
-    return post_seq
+    
+    return post_seq 
 
 
 def normalize_kernel(kernel):
@@ -73,7 +76,6 @@ def normalize_kernel(kernel):
     return nkernel
 
 
-
 class MismatchKernel(MismatchTrie):
     """
     Python implementation of Mismatch String Kernels.
@@ -85,18 +87,18 @@ class MismatchKernel(MismatchTrie):
        256: for data encoded as strings of bytes
        4: for DNA/RNA sequence (bioinformatics)
        20: for protein data (bioinformatics)
-    k: int, optional (default None), the k in 'k-mer'
+    k: int, optional (default None), the k in 'k-mer'.
     m: int, optional (default None)
-       maximum number of mismatches for 2 k-mers to be considered 'similar'
-       Normally small values of m should work well
-       Plus, the complexity of the algorithm is exponential in m
+       maximum number of mismatches for 2 k-mers to be considered 'similar'.
+       Normally small values of m should work well.
+       Plus, the complexity of the algorithm is exponential in m.
     **kwargs: dict, optional (default empty)
-              optional parameters to pass to `tree.MismatchTrie` instantiation
+              optional parameters to pass to `tree.MismatchTrie` instantiation.
     
     Attributes
     ----------
-    `kernel`: 2D array of shape (n_sampled, n_samples), estimated kernel
-    `n_survived_kmers`: number of leafs/k-mers that survived trie traversal
+    `kernel`: 2D array of shape (n_sampled, n_samples), estimated kernel.
+    `n_survived_kmers`: number of leafs/k-mers that survived trie traversal.
     """
 
     def __init__(self, l=None, k=None, m=None, **kwargs):
@@ -122,13 +124,15 @@ class MismatchKernel(MismatchTrie):
             self.m = m
 
     def get_kernel(self, X, **kwargs):
-        """ Main calling function to get mismatch string kernel
+        """ 
+        Main calling function to get mismatch string kernel.
         """
+
         if isinstance(X, tuple):
             assert len(X) == 5, "Invalid model."
             self.l, self.k, self.m, self.leaf_kmers_, self.kernel = X
             # sanitize the types and shapes of self.l, self.j, self.m,
-            # self.leaf_kmers, and self.kernel
+            # self.leaf_kmers_, and self.kernel
         else:
             # traverse/build trie proper
             for x in ['l', 'k', 'm']:
@@ -144,19 +148,10 @@ class MismatchKernel(MismatchTrie):
             self.kernel = normalize_kernel(self.kernel)
 
             # gather up the leafs
-            self.leaf_kmers = dict((leaf.full_label,
-                                      dict((index, len(kgs)) for index, kgs
+            self.leaf_kmers_ = dict((leaf.full_label,
+                                    dict((index, len(kgs)) for index, kgs
                                            in leaf.kmers.items()))
                                      for leaf in self.leafs())
-
+        
         return self
-
-
-# Test
-if __name__ == '__main__':
-    sequences = ['aatgcACGTTGAgatcg','acgtgACGTTTGacggt','agtccATGCTGTaagtc',
-    'gttccTCACCGTcgcgt','gtacgTCTCGCTgtcgt']
-    int_seq = preprocess(sequences)
-    mismatch_kernel = MismatchKernel(l=4, k=3, m=1).get_kernel(int_seq)
-    simi_mat = mismatch_kernel.kernel
-    print(simi_mat)
+       
