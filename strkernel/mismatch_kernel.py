@@ -130,9 +130,9 @@ class MismatchKernel(MismatchTrie):
 
         if isinstance(X, tuple):
             assert len(X) == 5, "Invalid model."
-            self.l, self.k, self.m, self.leaf_kmers_, self.kernel = X
+            self.l, self.k, self.m, self.leaf_kmers, self.kernel = X
             # sanitize the types and shapes of self.l, self.j, self.m,
-            # self.leaf_kmers_, and self.kernel
+            # self.leaf_kmers, and self.kernel
         else:
             # traverse/build trie proper
             for x in ['l', 'k', 'm']:
@@ -148,7 +148,7 @@ class MismatchKernel(MismatchTrie):
             self.kernel = normalize_kernel(self.kernel)
 
             # gather up the leafs
-            self.leaf_kmers_ = dict((leaf.full_label,
+            self.leaf_kmers = dict((leaf.full_label,
                                     dict((index, len(kgs)) for index, kgs
                                            in leaf.kmers.items()))
                                      for leaf in self.leafs())
