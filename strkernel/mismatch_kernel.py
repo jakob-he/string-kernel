@@ -123,7 +123,7 @@ class MismatchKernel(MismatchTrie):
             self.k = k
             self.m = m
 
-    def get_kernel(self, X, **kwargs):
+    def get_kernel(self, X, normalize = True, **kwargs):
         """ 
         Main calling function to get mismatch string kernel.
         """
@@ -143,9 +143,10 @@ class MismatchKernel(MismatchTrie):
                          "k, m, leafs, and, kernel).") % x)
             self.kernel, _, _ = self.traverse(
                 X, self.l, self.k, self.m, **kwargs)
-
+            
+            if normalize:
             # normalize kernel
-            self.kernel = normalize_kernel(self.kernel)
+                self.kernel = normalize_kernel(self.kernel)
 
             # gather up the leafs
             self.leaf_kmers = dict((leaf.full_label,
