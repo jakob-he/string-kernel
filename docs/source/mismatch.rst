@@ -19,9 +19,7 @@ A single sequence is defined by a sequence of the following elements:
      
 - k: int, used in k-mers to compute the kernel
      
-- m: int, maximum number of mismatches for 2 k-mers to be considered 'similar'.
-     Normally, small values of m should work well.
-     Plus, the complexity the algorithm is exponential in m
+- m: int, maximum number of mismatches for 2 k-mers to be considered 'similar'. Normally, small values of m should work well. Plus, the complexity the algorithm is exponential in m
      
 - kernel: 2D matrix of shape (n_samples, n_samples) suggesting the similarities between sequences
 
