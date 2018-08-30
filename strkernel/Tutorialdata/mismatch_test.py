@@ -23,7 +23,7 @@ from timeit import default_timer as timer
 posSeq = [seq.seq for seq in SeqIO.parse('/notebook_data/positive_IGF2BP123.fasta', 'fasta')]
 negSeq = [seq.seq for seq in SeqIO.parse('/notebook_data/negative_IGF2BP123.fasta', 'fasta')]
 
-# randomly opt 1000 positive sequences 
+# a quick check by randomly opting 1000 positive sequences 
 # and 1000 negative sequneces to save running time
 posX = preprocess(random.choice(posSeq, 1000))
 negX = preprocess(random.choice(negSeq, 1000))
@@ -34,9 +34,9 @@ negY = np.zeros(len(negX), dtype=int)
 
 start = timer()
 
-# (8,1)-mismatch kernel
-posKernels = MismatchKernel(l=4, k=8, m=1).get_kernel(posX).kernel
-negKernels = MismatchKernel(l=4, k=8, m=1).get_kernel(negX).kernel
+# (5,1)-mismatch kernel
+posKernels = MismatchKernel(l=4, k=5, m=1).get_kernel(posX).kernel
+negKernels = MismatchKernel(l=4, k=5, m=1).get_kernel(negX).kernel
 
 end = timer()
 print("Time used to compute kernels:", end-start)
