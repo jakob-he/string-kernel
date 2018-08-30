@@ -1,9 +1,8 @@
 from unittest import TestCase
 import unittest
 
-from mismatch_kernel import preprocess
-from mismatch_kernel import MismatchKernel
-import mismatch_kernel
+from strkernel.mismatch_kernel import preprocess, MismatchKernel
+import strkernel.mismatch_kernel
 
 class Test_Mismatch_Kernel(TestCase):
   def test_preprocess(self):
