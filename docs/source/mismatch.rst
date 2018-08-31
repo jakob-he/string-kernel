@@ -36,7 +36,7 @@ The collection of computed sequences has to be defined as a list of strings, for
 This collection can then be used to compute the mismatch kernel::
 
     from strkernel.mismatch_kernel import MismatchKernel
-    motif_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection)
+    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection)
 
 Particularlly, the sequence collection is recommended to be preprocessed to regulate the input format and avoid subsequent errors before being applied to compute the mismatch kernel, which can be achieved by calling the function *preprocess* in *mismatch_kernel*::
 
