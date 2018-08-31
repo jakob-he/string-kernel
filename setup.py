@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(name='strkernel',
-      version='0.1',
+      version='0.2',
       description='Collection of string kernels',
       long_description='This packages includes a variety of string kernel methods. Each method transforms the list of input strings into a format that can be used by machine learning algorithm (e.g. SVM).',
       classifiers=[
