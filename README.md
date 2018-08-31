@@ -4,7 +4,7 @@ Strkernel
 Documentation
 =============
 
-The full documentation including tutorials and examples with each kernel can be found at: https://www.string-kernel.readthedocs.io
+The full documentation including tutorials and examples with each kernel is available [here](https://string-kernel.readthedocs.io/en/latest/).
 
 
 Getting Started
