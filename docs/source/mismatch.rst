@@ -3,7 +3,7 @@ Mismatch Kernel
 
 Mismatch kernel is used with support vector machines (SVMs) in a discriminative approach to classification problem. The mismatch kernel measures sequence similarity based on shared occurrences of **k**-length subsequences, counted with up to **m** mismatches, and do not rely on any generative model for the positive training sequences. The kernels can be efficiently computed by using a mismatch tree data structure [1]_. Plus, the mismatch kernel used with an SVM classifier performs fairly well, which has been proved in the provided tutorial 'mismatch_tutorial.ipynb'.
 
-A single sequence is defined by a sequence of the following elements:
+The key elements needed to be defined by users are described as following:
 
 - data: 2D matrix of shape (n_samples, n_features), sequences needed to be computed as kernel
 
