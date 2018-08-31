@@ -16,7 +16,7 @@ class Test_Motif_Kernel(TestCase):
     def test_trie(self):
         trie = MotifTrie(["A[CG]T", "C.G", "C..G.T", "G[A][AT]", "GT.A[CA].[CT]G"])
         self.assertTrue(np.array_equal(
-            trie._check_for_motifs("AGTCTGCTTGCT"), [1, 1, 1, 0, 0]))
+            trie.check_for_motifs("AGTCTGCTTGCT"), [1, 1, 1, 0, 0]))
 
     def test_kernel(self):
         motifs = ["A[CG]T", "C.G", "C..G.T", "G[A][AT]"

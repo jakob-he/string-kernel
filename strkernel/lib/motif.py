@@ -17,7 +17,7 @@ class Motif:
 
     def __init__(self, motif: str):
         self._orginal_motif = motif
-        self._motif = self._process_motif()
+        self._motif = self.process_motif()
         self.index = 0
 
     def __repr__(self):
@@ -37,7 +37,7 @@ class Motif:
         motif = []
         brackets = False
         complement = False
-        alphabet = self._get_alphabet()
+        alphabet = self.get_alphabet()
 
         for char in self._orginal_motif:
             if brackets:
