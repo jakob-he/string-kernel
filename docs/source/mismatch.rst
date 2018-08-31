@@ -56,8 +56,6 @@ Last but not least, the mismatch kernel also includes an attribution to display 
 
     print(mismatch_kernel.leaf_kmers)
 
-For more details, please check the provided tutorial: mismatch_tutorial.ipynb
-
 References
 ----------
 

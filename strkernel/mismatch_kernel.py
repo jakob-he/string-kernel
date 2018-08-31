@@ -2,14 +2,14 @@
  Module: mismatch string kernel
  Implementattion of mismatch string kernel
  Author: Meng Zhang <RainaMeng@outlook.com>
- Reference: 
+ Reference:
   Leslie C.S., Eskin E., Cohen A., Weston J., Noble W.S.
   Mismatch string kernels for discriminative protein classification.
   Bioinformatics. 2004;20:467–476. doi: 10.1093/bioinformatics/btg431.
  <https://papers.nips.cc/paper/2179-mismatch-string-kernels-for-svm-protein-classification.pdf>
 """
 
-from MismatchTrie import MismatchTrie
+from strkernel.lib.mismatchTrie import MismatchTrie
 import numpy as np
 
 
@@ -42,14 +42,14 @@ def preprocess(sequences, ignoreLower=True):
             seq = seq.upper()
         upper_seq.append(integerized(seq))
         len_record.append(len(seq))
-    
+
     length_used = min(len_record)
     post_seq = []
     for seq in upper_seq:
         seq = seq[:length_used]
         post_seq.append(seq)
-    
-    return post_seq 
+
+    return post_seq
 
 
 def normalize_kernel(kernel):
@@ -94,7 +94,7 @@ class MismatchKernel(MismatchTrie):
        Plus, the complexity of the algorithm is exponential in m.
     **kwargs: dict, optional (default empty)
               optional parameters to pass to `tree.MismatchTrie` instantiation.
-    
+
     Attributes
     ----------
     `kernel`: 2D array of shape (n_sampled, n_samples), estimated kernel.
@@ -124,7 +124,7 @@ class MismatchKernel(MismatchTrie):
             self.m = m
 
     def get_kernel(self, X, normalize = True, **kwargs):
-        """ 
+        """
         Main calling function to get mismatch string kernel.
         """
 
@@ -143,7 +143,7 @@ class MismatchKernel(MismatchTrie):
                          "k, m, leafs, and, kernel).") % x)
             self.kernel, _, _ = self.traverse(
                 X, self.l, self.k, self.m, **kwargs)
-            
+
             if normalize:
             # normalize kernel
                 self.kernel = normalize_kernel(self.kernel)
@@ -153,6 +153,5 @@ class MismatchKernel(MismatchTrie):
                                     dict((index, len(kgs)) for index, kgs
                                            in leaf.kmers.items()))
                                      for leaf in self.leafs())
-        
+
         return self
-       

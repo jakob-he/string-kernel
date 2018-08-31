@@ -15,10 +15,10 @@ How to use the Gappy-Pair Kernel
 ---------------------------
 
 Define a k' and a g and use either the function gappypair_kernel from gappy_kernel for the simple approach or gappy_trie for the trie approach.
-Both function return a sparse matrix, which can than be used in a SVM classifier.
+Both function return a sparse matrix, which can than be used in a SVM classifier.::
 
-    from gappy_kernel import gappypair_kernel as gk
-    from gappy_trie import gappypair_kernel as gt
+    from strkernel.gappy_kernel import gappypair_kernel as gk
+    from strkernel.gappy_trie import gappypair_kernel as gt
 
     sequences = ['ACGTAACT','GTATATAG', 'TAGAGATT']
     # Note the t in the input parameters is refering to dna.
@@ -35,8 +35,6 @@ Both function return a sparse matrix, which can than be used in a SVM classifier
     # Or for the trie approach
     clf = SVC(C=0.1, kernel='linear', probability=True)
     clf.fit(X2, y)
-
-Please look into the ipython tutorial Gappy_Kernel_IGF_Example.ipynb.
 
 
 References
