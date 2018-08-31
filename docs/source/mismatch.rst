@@ -1,7 +1,7 @@
 Mismatch Kernel
 ===============
 
-Mismatch kernel is used with support vector machines (SVMs) in a discriminative approach to classification problem. The mismatch kernel measures sequence similarity based on shared occurrences of **k**-length subsequences, counted with up to **m** mismatches, and do not rely on any generative model for the positive training sequences. The kernels can be efficiently computed by using a mismatch tree data structure [1]_. Plus, the mismatch kernel used with an SVM classifier performs fairly well, which has been proved in the provided tutorial 'mismatch_tutorial.ipynb'.
+Mismatch kernel is used with support vector machines (SVMs) in a discriminative approach to classification problem. The mismatch kernel measures sequence similarity based on shared occurrences of **k**-length subsequences, counted with up to **m** mismatches, that is, what we generally state as **(k, m)-mismatch**, and do not rely on any generative model for the positive training sequences. The kernels can be efficiently computed by using a mismatch tree data structure [1]_. Plus, the mismatch kernel used with an SVM classifier performs fairly well, which has been proved in the provided tutorial 'mismatch_tutorial.ipynb'.
 
 The key elements needed to be defined by users are described as following:
 
@@ -20,6 +20,8 @@ The key elements needed to be defined by users are described as following:
 - k: int, used in k-mers to compute the kernel
      
 - m: int, maximum number of mismatches for 2 k-mers to be considered 'similar'. Normally, small values of m should work well. Plus, the complexity the algorithm is exponential in m
+
+Finally, the expected result is the mismatch string kernel:
      
 - kernel: 2D matrix of shape (n_samples, n_samples) suggesting the similarities between sequences
 
@@ -40,7 +42,7 @@ Particularlly, the sequence collection is recommended to be preprocessed to regu
 
     from strkernel.mismatch_kernel import preprocess
     after_process = preprocess(mismatch_collection)
-    motif_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection)
+    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection)
 
 Afterwards, the derived kernel, a sparse matrix indicating the similarities between different sequences based on inner product of occurence counts of all (k, m)-mismatch kmers. If the lower case letters in every string are being considered, the parameter *ignoreLower* in *preprocess* function should be set as **False**, which is **True** by default. In addition, the function *get_kernel* can also be tuned by setting parameter *normalize*. Normalization is enabled by default since it generally improves accuracy. Normalization is realized by doing: **kernel[x, y] / sqrt(kernel[x, x] * kernel[y, y])**. That is, the diagonal elements in kernel matrix are set as 1 regarding that the similarity between a certain string and itself should be 'biggest'::
 
@@ -48,7 +50,11 @@ Afterwards, the derived kernel, a sparse matrix indicating the similarities betw
     # preprocess
     after_process = preprocess(mismatch_collection, ignoreLower=False)
     # compute mismatch kernel
-    motif_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection, normalize = False)
+    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection, normalize = False)
+
+Last but not least, the mismatch kernel also includes an attribution to display the middle step of getting a kernel providing an opportunity for users to check the details to compute the final kernel. 'leaf_kmers' shows us all mismatch kmers and the occurence counts of every k-mer in every string. n vectors of length m can derive from 'leaf_kmers', where n is number of strings, whose similarities will be computed in the susequent steps and m is the number of all k-mers. The similarity between string i and string j is the inner product of vector i and j, where 1<= i, j <= n::
+
+    print(mismatch_kernel.leaf_kmers)
 
 For more details, please check the provided tutorial: mismatch_tutorial.ipynb
 
