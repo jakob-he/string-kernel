@@ -42,7 +42,7 @@ Particularlly, the sequence collection is recommended to be preprocessed to regu
 
     from strkernel.mismatch_kernel import preprocess
     after_process = preprocess(mismatch_collection)
-    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection)
+    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(after_process)
 
 Afterwards, the derived kernel, a sparse matrix indicating the similarities between different sequences based on inner product of occurence counts of all (k, m)-mismatch kmers. If the lower case letters in every string are being considered, the parameter *ignoreLower* in *preprocess* function should be set as **False**, which is **True** by default. In addition, the function *get_kernel* can also be tuned by setting parameter *normalize*. Normalization is enabled by default since it generally improves accuracy. Normalization is realized by doing: **kernel[x, y] / sqrt(kernel[x, x] * kernel[y, y])**. That is, the diagonal elements in kernel matrix are set as 1 regarding that the similarity between a certain string and itself should be 'biggest'::
 
@@ -50,7 +50,7 @@ Afterwards, the derived kernel, a sparse matrix indicating the similarities betw
     # preprocess
     after_process = preprocess(mismatch_collection, ignoreLower=False)
     # compute mismatch kernel
-    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(mismatch_collection, normalize = False)
+    mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(after_process, normalize = False)
 
 Last but not least, the mismatch kernel also includes an attribution to display the middle step of getting a kernel providing an opportunity for users to check the details to compute the final kernel. 'leaf_kmers' shows us all mismatch kmers and the occurence counts of every k-mer in every string. n vectors of length m can derive from 'leaf_kmers', where n is number of strings, whose similarities will be computed in the susequent steps and m is the number of all k-mers. The similarity between string i and string j is the inner product of vector i and j, where 1<= i, j <= n::
 
