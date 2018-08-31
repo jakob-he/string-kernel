@@ -52,7 +52,7 @@ Afterwards, the derived kernel, a sparse matrix indicating the similarities betw
     # compute mismatch kernel
     mismatch_kernel = MismatchKernel(l=l, k=k, m=m).get_kernel(after_process, normalize = False)
 
-Last but not least, the mismatch kernel also includes an attribution to display the middle step of getting a kernel providing an opportunity for users to check the details to compute the final kernel. 'leaf_kmers' shows us all mismatch kmers and the occurence counts of every k-mer in every string. n vectors of length m can derive from 'leaf_kmers', where n is number of strings, whose similarities will be computed in the susequent steps and m is the number of all k-mers. The similarity between string i and string j is the inner product of vector i and j, where 1<= i, j <= n::
+Last but not least, the mismatch kernel also includes an attribution to display the middle step of getting a kernel providing an opportunity for users to check the details to compute the final kernel. *leaf_kmers* shows us all mismatch kmers and the occurence counts of every k-mer in every string. n vectors of length m can derive from *leaf_kmers*, where n is number of strings, whose similarities will be computed in the susequent steps and m is the number of all k-mers. The similarity between string i and string j is the inner product of vector i and j, where 1<= i, j <= n::
 
     print(mismatch_kernel.leaf_kmers)
 
