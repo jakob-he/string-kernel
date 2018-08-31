@@ -4,7 +4,7 @@ Strkernel
 Documentation
 =============
 
-The full documentation including tutorials and examples with each kernel can be found at: _string-kernel.readthedocs.io: https://www.string-kernel.readthedocs.io
+The full documentation including tutorials and examples with each kernel can be found at: https://www.string-kernel.readthedocs.io
 
 
 Getting Started
@@ -13,28 +13,23 @@ Getting Started
 Introduction
 ------------
 
-Strkernel is a python package designed to perform a kernel based analysis of biological sequences. The implementation assumes the use of Support Vector Machines (SVMS) but does not strictly require it since each kernel can be used separately of any machine learning algorithm. Further instructions on how to combine the kernel methods with machine learning approaches can be found in the Tutorials_ section. The package provides three different kernels which can be used for sequence analysis:
+Strkernel is a python package designed to perform a kernel based analysis of biological sequences. The implementation assumes the use of Support Vector Machines (SVMS) but does not strictly require it since each kernel can be used separately of any machine learning algorithm. Further instructions on how to combine the kernel methods with machine learning approaches can be found in the Tutorials section. The package provides three different kernels which can be used for sequence analysis:
 
-- Gappy Kernel [1]_
-- Mismatch Kernel [2]_
-- Motif Kernel [3]_
+- Gappy Kernel [1]
+- Mismatch Kernel [2]
+- Motif Kernel [3]
 
 The general use case of strkernel is the conversion of a set of sequences into a matrix with numeric similarity measurements. The expected input are either sequences or Sequence objects of the Biopython_ package. 
-In addition to the default output, the Motif Kernel implementation supports the output of a similarity matrix for a set of given sequences. The default output, however, is a sparse matrix where each row represents one sequence. The meaning of the columns depends on which kernel was used and is be explained in the corresponding section_. 
-
-.. _R: https://bioconductor.org/packages/release/bioc/html/kebabs.html
-.. _Tutorials: examples.html#Tutorials
-.. _Biopython: https://biopython.org/
-.. _section: kernels.html#Kernels
+In addition to the default output, the Motif Kernel implementation supports the output of a similarity matrix for a set of given sequences. The default output, however, is a sparse matrix where each row represents one sequence. The meaning of the columns depends on which kernel was used and is be explained in the corresponding section. 
 
 Installation
 ------------
 
-- Install strkernel via PyPi (recommended)::
+Install strkernel via PyPi (recommended)::
 
      sudo pip install strkernel
 
-- Install strkernel via github::
+Install strkernel via github::
 
      git clone https://github.com/jakob-he/string-kernel
      python setup.py install
@@ -58,8 +53,10 @@ Bio sequences such as DNA, RNA and protein sequences are widely used in SVMs, be
 References
 ----------
 
-.. [1] Pavel Kuksa, Pai-Hsi Huang, and Vladimir Pavlovic. A fast, large-scale learning method for protein sequence classification. In 8th Int. Workshop on Data Mining in Bioinformatics, pages 29–37, Las Vegas, NV, 2008.
-.. [2] Christina S. Leslie, Eleazar Eskin, Adiel Cohen, Jason Weston, and William Stafford Noble. Mismatch string kernels for discriminative protein classification. Bioinformatics, 1(1):1–10, 2003.
-.. [3] Asa Ben-Hur and Douglas L. Brutlag. Remote homology detection: a motif based approach. Bioinformatics, 19:26–33, 2003.
+[1] Pavel Kuksa, Pai-Hsi Huang, and Vladimir Pavlovic. A fast, large-scale learning method for protein sequence classification. In 8th Int. Workshop on Data Mining in Bioinformatics, pages 29–37, Las Vegas, NV, 2008.
+
+[2] Christina S. Leslie, Eleazar Eskin, Adiel Cohen, Jason Weston, and William Stafford Noble. Mismatch string kernels for discriminative protein classification. Bioinformatics, 1(1):1–10, 2003.
+
+[3] Asa Ben-Hur and Douglas L. Brutlag. Remote homology detection: a motif based approach. Bioinformatics, 19:26–33, 2003.
 
 
