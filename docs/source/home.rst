@@ -4,13 +4,13 @@ Getting Started
 Introduction
 ------------
 
-Strkernel is a python package designed to perform a kernel based analysis of biological sequences. The implementation assumes the use of Support Vector Machines (SVMS) but does not strictly require it since each kernel can be used separately of any machine learning algorithm. Further instructions on how to combine the kernel methods with machine learning approaches can be found in the Tutorials_ section. The package provides three different kernels which can be used for sequence analysis:
+Strkernel is a python package designed to perform a kernel based analysis of biological sequences. The implementation assumes the use of Support Vector Machines (SVMs) but does not strictly require it since each kernel can be used separately of any machine learning algorithm. Further instructions on how to combine the kernel methods with machine learning approaches can be found in the Tutorials_ section. The package provides three different kernels which can be used for sequence analysis:
 
 - Gappy Kernel [1]_
 - Mismatch Kernel [2]_
 - Motif Kernel [3]_
 
-The general use case of strkernel is the conversion of a set of sequences into a matrix with numeric similarity measurements. The expected input are either sequences or Sequence objects of the Biopython_ package. 
+The general use case of strkernel is the conversion of a set of sequences into a matrix with numeric similarity measurements. The expected input are either sequences as strings or Sequence objects of the Biopython_ package. 
 In addition to the default output, the Motif Kernel implementation supports the output of a similarity matrix for a set of given sequences. The default output, however, is a sparse matrix where each row represents one sequence. The meaning of the columns depends on which kernel was used and is be explained in the corresponding section_. 
 
 .. _R: https://bioconductor.org/packages/release/bioc/html/kebabs.html
@@ -33,7 +33,7 @@ Installation
 Tests
 -----
 
-You can run several tests to ensure that the package is fully working. To use the testsuite you have to download the package via github::
+You can run several tests to ensure that the package is working. To use the testsuite you have to download the package via github::
 
     git clone https://github.com/jakob-he/string-kernel
     python setup.py test
