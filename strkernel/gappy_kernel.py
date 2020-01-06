@@ -40,8 +40,6 @@ def _extract_gappy_sequence(sequence, k, g,t=0,reverse=False):
     alphabet=len(alphabets[t])
     powersize=np.power(alphabet, (kk))
     multiplier = np.power(alphabet, range(kk))[::-1]
-    if reverse:
-        powersize=int(np.power(alphabet, (kk))/2)
     spectrum = np.zeros((powersize))
     for pos in range(n - kk + 1):
             pos_in_spectrum = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+(kk)],t,reverse=reverse))
@@ -81,8 +79,6 @@ def _extract_gappy_sequence_different(sequence, k, g,t=0,reverse=False):
     alphabet=len(alphabets[t])
     powersize=np.power(alphabet, (kk))
     multiplier = np.power(alphabet, range(kk))[::-1]
-    if reverse:
-        powersize=int(np.power(alphabet, (kk))/2)
     spectrum = np.zeros((g+1)*(powersize))
     for pos in range(n - kk + 1):
             pos_in_spectrum = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+(kk)],t,reverse=reverse))
