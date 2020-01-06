@@ -73,8 +73,7 @@ def _extract_spectrum_sequence(sequence, k,t=0,reverse=False):
 
 def _extract_gappy_sequence_different(sequence, k, g,t=0,reverse=False):
     """Compute gappypair-spectrum for a given sequence, k-mer length k and
-    gap length g. A 2*k-mer with gap is saved at the same position as a 2*k-mer
-    without a gap. A 2*k-mer with a certain gap size is saved at a different
+    gap length g. A 2*k-mer with a certain gap size is saved at a different
     position than the same 2*k-mer with no gaps or another number of gaps.
     """
     n = len(sequence)
@@ -88,7 +87,7 @@ def _extract_gappy_sequence_different(sequence, k, g,t=0,reverse=False):
     for pos in range(n - kk + 1):
             pos_in_spectrum = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+(kk)],t,reverse=reverse))
             spectrum[pos_in_spectrum] += 1
-            if (pos+g+kk+1)<n:
+            if (pos+g+kk)<=n:
                 for gap in range(1,g+1):
                     pos_gap = np.sum(multiplier * get_numbers_for_sequence(sequence[pos:pos+k] + sequence[pos+k+gap:pos+gap+kk],t,reverse=reverse))
                     spectrum[(gap*(powersize))+pos_gap] += 1
