@@ -122,11 +122,11 @@ def gappypair_kernel(sequences, k, g=0,t=0,sparse=True, reverse=False, include_f
         else:
             seq = [x for x in seq if 'A' <= x <= 'Z']
         if (g>0) and gapDifferent:
-            spectrum.append(_extract_gappy_sequence_different(seq, k, g))
+            spectrum.append(_extract_gappy_sequence_different(seq, k, g, t = t, reverse = reverse))
         elif g>0:
-            spectrum.append(_extract_gappy_sequence(seq, k, g))
+            spectrum.append(_extract_gappy_sequence(seq, k, g, t = t, reverse = reverse))
         else:
-            spectrum.append(_extract_spectrum_sequence(seq, k))
+            spectrum.append(_extract_spectrum_sequence(seq, k, t = t, reverse = reverse))
     if sparse:
         return csr_matrix(spectrum)
     return np.array(spectrum)
