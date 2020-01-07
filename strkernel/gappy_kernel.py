@@ -18,7 +18,7 @@ def get_numbers_for_sequence(sequence,t=0,reverse=False):
     except ValueError:
         return [-1]
     if reverse:
-        rev=[alphabets[t].index(x) for x in str(Seq(sequence).reverse_complement())]
+        rev=[alphabets[t].index(x) for x in sequence.reverse_complement()]
         if ori>rev:
             return rev
     return ori
