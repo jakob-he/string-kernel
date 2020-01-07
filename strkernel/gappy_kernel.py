@@ -115,12 +115,10 @@ def gappypair_kernel(sequences, k, g=0,t=0,sparse=True, reverse=False, include_f
     """
     spectrum = []
     for seq in sequences:
-    # To be capable to handle string input - does that make sense?
-    #seq=Seq(seq)
         if include_flanking:
             seq = seq.upper()
         else:
-            seq = [x for x in seq if 'A' <= x <= 'Z']
+            seq = Seq("".join([x for x in seq if 'A' <= x <= 'Z']))
         if (g>0) and gapDifferent:
             spectrum.append(_extract_gappy_sequence_different(seq, k, g, t = t, reverse = reverse))
         elif g>0:
